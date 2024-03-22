@@ -92,3 +92,5 @@ Copy the .ini file for the given sex and edit the values as needed.
 
 ## Credits
 directkeys.py logic via stackoverflow user `user573949` - [Post](http://stackoverflow.com/questions/14489013/simulate-python-keypresses-for-controlling-a-game)
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FMx772%2Fdragons-dogma-2-auto-character-creator%2Ftree%2Fmain&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
