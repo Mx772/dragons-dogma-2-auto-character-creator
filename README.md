@@ -22,6 +22,11 @@ Open the directory and run:
 
 I have it set to a `2` second delay, after running, select the first section of the character creator.
 
+> What is the 'default' profile?
+
+![defaultGif](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/bb7f280d-721a-4740-ac93-894916a8ab34)
+
+
 
 ## Preview
 
