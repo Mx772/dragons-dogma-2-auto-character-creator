@@ -24,17 +24,22 @@ This will pop up a GUI for you to select the `default` and `target` ini file you
 
 (Defaults found in the /default directory, example woman in /templates directory)
 
-I have it set to a `2` second delay, after pressing 'run', select the first section of the character creator. (See Photo)
-<!-- Insert Photo -->
+I have it set to a `2` second delay, after pressing 'run', select the first attribute of the 'body' category. (See Photo)
+
+![image](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/e116184d-a14e-4d45-ace2-b513a3884c62)
+
 
 
 > What is the 'default' profile?
 
 Default Woman:
+
 ![defaultGif](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/bb7f280d-721a-4740-ac93-894916a8ab34)
 
 Default Man:
-<!-- Replace with Man Gif -->
+
+![male_default](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/e6811a84-5026-4c51-b06b-f4ae4d3230ea)
+
 
 
 ## Preview
