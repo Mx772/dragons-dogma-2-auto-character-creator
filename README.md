@@ -15,7 +15,13 @@ Will likely require Windows, untested on other OS.
 
 ## Usage
 
+Via Git:
+
 `git clone https://github.com/Mx772/dragons-dogma-2-auto-character-creator.git`
+
+Via Github:
+
+Download the release .zip [here](https://github.com/octo-org/octo-repo/releases/latest) and unzip it.
 
 Open the directory and run:
 `python main.py`
