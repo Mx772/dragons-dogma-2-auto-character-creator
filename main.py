@@ -81,17 +81,17 @@ class App(tk.Tk):
         default_label.grid(row=0, column=0)
 
         # Add buttons for selecting the default config file
-        human_male_button = tk.Button(frame, text="Human Male", command=lambda: self.set_default_file(r"defaults\human_male.ini"))
-        human_male_button.grid(row=0, column=1, padx=5)
+        human_male_button = tk.Button(frame, text="Human Male", wraplength=100, command=lambda: self.set_default_file(r"defaults\human_male.ini"))
+        human_male_button.grid(row=0, column=1, padx=2, sticky="ew")
 
-        human_female_button = tk.Button(frame, text="Human Female", command=lambda: self.set_default_file(r"defaults\human_female.ini"))
-        human_female_button.grid(row=0, column=2, padx=5)
+        human_female_button = tk.Button(frame, text="Human Female", wraplength=100, command=lambda: self.set_default_file(r"defaults\human_female.ini"))
+        human_female_button.grid(row=0, column=2, padx=2, sticky="ew")
 
-        beastren_male_button = tk.Button(frame, text="Beastren Male", command=lambda: self.set_default_file(r"defaults\beastren_male.ini"))
-        beastren_male_button.grid(row=0, column=3, padx=5)
+        beastren_male_button = tk.Button(frame, text="Beastren Male (Doesn't work)", wraplength=100, command=lambda: self.set_default_file(r"defaults\beastren_male.ini"))
+        beastren_male_button.grid(row=0, column=3, padx=2, sticky="ew")
 
-        beastren_female_button = tk.Button(frame, text="Beastren Female", command=lambda: self.set_default_file(r"defaults\beastren_female.ini"))
-        beastren_female_button.grid(row=0, column=4, padx=5)
+        beastren_female_button = tk.Button(frame, text="Beastren Female (Doesn't work)", wraplength=100, command=lambda: self.set_default_file(r"defaults\beastren_female.ini"))
+        beastren_female_button.grid(row=0, column=4, padx=2, sticky="ew")
 
         target_label = tk.Label(frame, text="Target Config:")
         target_label.grid(row=1, column=0)
