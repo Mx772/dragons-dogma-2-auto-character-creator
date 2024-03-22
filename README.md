@@ -2,8 +2,8 @@
 An automated Python script for creating and customizing characters in Dragon's Dogma 2. 
 
 This python script takes two ini files. 
-`default.ini` which is the default woman preset and `character_config.ini` which is the desired presets. 
-(TODO: Male/Other Races) 
+A default profile which is used to find the original value, and a target profile which is the desired presets. 
+(TODO: Default Other Races) 
 
 The script then goes through each page simulating key presses to set the 'default' character to the desired. 
 
@@ -20,12 +20,21 @@ Will likely require Windows, untested on other OS.
 Open the directory and run:
 `python main.py`
 
-I have it set to a `2` second delay, after running, select the first section of the character creator.
+This will pop up a GUI for you to select the `default` and `target` ini file you wish to use. 
+
+(Defaults found in the /default directory, example woman in /templates directory)
+
+I have it set to a `2` second delay, after pressing 'run', select the first section of the character creator. (See Photo)
+<!-- Insert Photo -->
+
 
 > What is the 'default' profile?
 
+Default Woman:
 ![defaultGif](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/bb7f280d-721a-4740-ac93-894916a8ab34)
 
+Default Man:
+<!-- Replace with Man Gif -->
 
 
 ## Preview
@@ -34,10 +43,9 @@ I have it set to a `2` second delay, after running, select the first section of 
 
 ## TODO
 
-- Male + Other Races
+- Other Races
 - Tattoos
 - Complex sliders (Where one slider causes others to move)
-- Simple GUI
 
 ## FAQ
 
@@ -55,9 +63,9 @@ Open an issue please!
 
 > How can I make a template?
 
-Copy `character_config.ini` and edit the values as needed. 
+Copy the .ini file for the given sex and edit the values as needed. 
 
-> What is the current `character_config.ini` based on?
+> What is the current template based on?
 
 [This post on reddit](https://www.reddit.com/r/fashiondogma/comments/1bgyw62/asian_girl/). It was on the front page and had photos of sliders. With photos, you can auto read the values in some programs which was easier than manually doing it. 
 
