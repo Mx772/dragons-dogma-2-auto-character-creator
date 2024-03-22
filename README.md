@@ -25,7 +25,7 @@ I have it set to a `2` second delay, after running, select the first section of 
 
 ## Preview
 
-[![CC Automation Demo](https://i.imgur.com/pplvcjh.gif)](https://imgur.com/UJTYH12)
+![ezgif-4-fc24f87209](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/107ed2f7-d2f5-40ed-b905-14eb8a779c3a)
 
 ## TODO
 
