@@ -72,6 +72,7 @@ class App(tk.Tk):
         self.default_file = tk.StringVar()
         self.target_file = tk.StringVar()
         self.log_messages = tk.StringVar()
+        self.selected_default = tk.StringVar()
         self.log_messages.set("")
 
         frame = tk.Frame(self)
@@ -81,16 +82,16 @@ class App(tk.Tk):
         default_label.grid(row=0, column=0)
 
         # Add buttons for selecting the default config file
-        human_male_button = tk.Button(frame, text="Human Male", wraplength=100, command=lambda: self.set_default_file(r"defaults\human_male.ini"))
+        human_male_button = tk.Button(frame, text="Human Male", wraplength=100, command=lambda: self.set_default_file(r"defaults\human_male.ini", human_male_button))
         human_male_button.grid(row=0, column=1, padx=2, sticky="ew")
 
-        human_female_button = tk.Button(frame, text="Human Female", wraplength=100, command=lambda: self.set_default_file(r"defaults\human_female.ini"))
+        human_female_button = tk.Button(frame, text="Human Female", wraplength=100, command=lambda: self.set_default_file(r"defaults\human_female.ini", human_female_button))
         human_female_button.grid(row=0, column=2, padx=2, sticky="ew")
 
-        beastren_male_button = tk.Button(frame, text="Beastren Male (Doesn't work)", wraplength=100, command=lambda: self.set_default_file(r"defaults\beastren_male.ini"))
+        beastren_male_button = tk.Button(frame, text="Beastren Male (Doesn't work)", wraplength=100, command=lambda: self.set_default_file(r"defaults\beastren_male.ini", beastren_male_button))
         beastren_male_button.grid(row=0, column=3, padx=2, sticky="ew")
 
-        beastren_female_button = tk.Button(frame, text="Beastren Female (Doesn't work)", wraplength=100, command=lambda: self.set_default_file(r"defaults\beastren_female.ini"))
+        beastren_female_button = tk.Button(frame, text="Beastren Female (Doesn't work)", wraplength=100, command=lambda: self.set_default_file(r"defaults\beastren_female.ini", beastren_female_button))
         beastren_female_button.grid(row=0, column=4, padx=2, sticky="ew")
 
         target_label = tk.Label(frame, text="Target Config:")
@@ -113,8 +114,14 @@ class App(tk.Tk):
         run_button = tk.Button(self, text="Run", command=self.run_program)
         run_button.pack(pady=10)
 
-    def set_default_file(self, file_path):
+    def set_default_file(self, file_path, button):
+        previous_button = self.nametowidget(self.selected_default.get())
+        if previous_button:
+            previous_button.configure(relief="raised")
+
         self.default_file.set(file_path)
+        self.selected_default.set(str(button))
+        button.configure(relief="sunken")
 
     def select_target_file(self):
         file_path = filedialog.askopenfilename(title="Select Target File")
