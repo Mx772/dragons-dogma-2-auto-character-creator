@@ -66,7 +66,7 @@ def adjust_slider(current_value: int, target_value: int, attribute_name: str, sl
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Character Creator")
+        self.title("DD2 Auto Slider")
         self.geometry("600x400")
 
         self.default_file = tk.StringVar()
