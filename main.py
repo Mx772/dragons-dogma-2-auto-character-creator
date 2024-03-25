@@ -4,6 +4,7 @@ import win32gui
 import configparser
 import time
 from typing import Dict, List
+import os
 
 # CONFIG
 debug = False
@@ -127,9 +128,9 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("DD2 Auto Slider")
-        self.geometry("600x400")
+        self.geometry("1000x800")
 
-        self.window_name_var = tk.StringVar(value="Character Creator & Storage")
+        self.window_name_var = tk.StringVar(value="Dragon's Dogma 2")
         self.default_file = tk.StringVar()
         self.target_file = tk.StringVar()
         self.log_messages = tk.StringVar()
@@ -167,11 +168,31 @@ class App(tk.Tk):
         toggle_label.grid(row=1, column=3)
 
         # Create a checkbox for toggling the window name
-        self.toggle_checkbox = tk.Checkbutton(frame, text="", variable=self.window_name_var, onvalue="Dragon's Dogma 2", offvalue="Character Creator & Storage")
+        self.toggle_checkbox = tk.Checkbutton(frame, text="", variable=self.window_name_var, onvalue="Character Creator & Storage", offvalue="Dragon's Dogma 2")
         self.toggle_checkbox.grid(row=1, column=4)
         
-        console_frame = tk.Frame(self)
-        console_frame.pack(fill="both", expand=True)
+        main_frame = tk.Frame(self)
+        main_frame.pack(fill="both", expand=True)
+
+        # Create a frame for the photo box
+        photo_frame = tk.Frame(main_frame)
+        photo_frame.pack(side="left", fill="both", expand=True)
+        
+        # Create a label for the photo box
+        photo_label = tk.Label(photo_frame, text="Target:")
+        photo_label.pack(side="top", fill="x")
+
+        # Create a canvas to display the photo
+        self.photo_canvas = tk.Canvas(photo_frame, width=400, height=400)
+        self.photo_canvas.pack(fill="both", expand=True)
+
+        # Load and display the default photo
+        default_photo_path = os.path.join("templates", "photos", "default.png")
+        self.load_photo(default_photo_path)
+
+        # Create a frame for the log box
+        console_frame = tk.Frame(main_frame)
+        console_frame.pack(side="left", fill="both", expand=True)
 
         console_label = tk.Label(console_frame, text="Log Messages:")
         console_label.pack(side="top", fill="x")
@@ -180,9 +201,30 @@ class App(tk.Tk):
         self.console_text.pack(side="top", fill="both", expand=True)
         self.console_text.configure(state="disabled")
 
+        # Bind the target_file variable to a function that updates the photo
+        self.target_file.trace("w", self.update_photo)
+
         run_button = tk.Button(self, text="Run", command=self.run_program)
         run_button.pack(pady=10)
 
+
+    def load_photo(self, photo_path):
+        if os.path.exists(photo_path):
+            self.photo_image = tk.PhotoImage(file=photo_path)
+            self.photo_canvas.create_image(0, 0, anchor="nw", image=self.photo_image)
+        else:
+            app.schedule_log(f"Could not find photo in {photo_path}")
+
+    def update_photo(self, *args):
+        target_file = self.target_file.get()
+        if target_file:
+            photo_filename = os.path.splitext(os.path.basename(target_file))[0] + ".png"
+            photo_path = os.path.join("templates", "photos", photo_filename)
+            self.load_photo(photo_path)
+        else:
+            default_photo_path = os.path.join("templates", "photos", "default.png")
+            self.load_photo(default_photo_path)
+            
     def set_default_file(self, file_path, button):
         previous_button = self.nametowidget(self.selected_default.get())
         if previous_button:
@@ -214,7 +256,7 @@ class App(tk.Tk):
 
         if default_file and target_file:
             # Call your main function with the selected files
-            main(default_file, target_file)
+            main(default_file, target_file, window_name)
         else:
             print("Please select both files.")
 
@@ -230,6 +272,7 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
         "page_2": [1, 4, 7, 9, 12, 7, 6, 6, 8],
         "page_3": [6, 3],
         "page_4": [9, 6, 8, 6, 3, 5, 6, 3],
+        "page_5": [1, 17, 17, 17, 17, 17, 1, 13, 13, 13, 13, 13, 4],
     }
 
     attributes = default_attributes.copy()
@@ -244,8 +287,16 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
         simulate_key_press([ESC, S, SP])
 
     dd2_window = win32gui.FindWindow(None, window_name)
+    if dd2_window:
+        app.schedule_log(f"Found window for {window_name}!")
+    else:
+        app.schedule_log(f"Could not find game window {window_name} - If you are using the 'Character Creator' make sure to click the toggle!")
+        
     window_set_foreground(dd2_window)
-    time.sleep(2)
+    app.schedule_log(f"Please highlight 'Body > Body > Height and do not move the mouse!")
+    app.schedule_log(f"Waiting for 3 seconds...")
+    app.schedule_log(f"To stop the app, close the Console window!")
+    time.sleep(3)
 
     processed_attributes = 0
     processed_categories = 0
