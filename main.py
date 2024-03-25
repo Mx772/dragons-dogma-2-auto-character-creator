@@ -214,7 +214,7 @@ class App(tk.Tk):
 
         if default_file and target_file:
             # Call your main function with the selected files
-            main(default_file, target_file)
+            main(default_file, target_file, window_name)
         else:
             print("Please select both files.")
 
@@ -230,6 +230,7 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
         "page_2": [1, 4, 7, 9, 12, 7, 6, 6, 8],
         "page_3": [6, 3],
         "page_4": [9, 6, 8, 6, 3, 5, 6, 3],
+        "page_5": [1, 17, 17, 17, 17, 17, 1, 13, 13, 13, 13, 13, 4],
     }
 
     attributes = default_attributes.copy()
