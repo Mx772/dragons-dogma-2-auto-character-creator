@@ -24,9 +24,12 @@ Via Github:
 Download the release .zip [here](https://github.com/octo-org/octo-repo/releases/latest) and unzip it.
 
 Open the directory and run:
-
-`python -m pip install -r requirements.txt`
-`python main.py`
+```
+python -m pip install -r requirements.txt
+python main.py
+```
+OR
+Run the .exe on windows.
 
 This will pop up a GUI for you to select the `default` and `target` ini file you wish to use. 
 
