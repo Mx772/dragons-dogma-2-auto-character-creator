@@ -129,7 +129,7 @@ class App(tk.Tk):
         self.title("DD2 Auto Slider")
         self.geometry("600x400")
 
-        self.window_name_var = tk.StringVar(value="Character Creator & Storage")
+        self.window_name_var = tk.StringVar(value="Dragon's Dogma 2")
         self.default_file = tk.StringVar()
         self.target_file = tk.StringVar()
         self.log_messages = tk.StringVar()
@@ -167,7 +167,7 @@ class App(tk.Tk):
         toggle_label.grid(row=1, column=3)
 
         # Create a checkbox for toggling the window name
-        self.toggle_checkbox = tk.Checkbutton(frame, text="", variable=self.window_name_var, onvalue="Dragon's Dogma 2", offvalue="Character Creator & Storage")
+        self.toggle_checkbox = tk.Checkbutton(frame, text="", variable=self.window_name_var, onvalue="Character Creator & Storage", offvalue="Dragon's Dogma 2")
         self.toggle_checkbox.grid(row=1, column=4)
         
         console_frame = tk.Frame(self)
