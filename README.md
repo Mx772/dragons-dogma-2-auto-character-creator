@@ -70,9 +70,7 @@ I have it set to a `2` second delay, after pressing 'run', select the first attr
 
 ## TODO
 
-- Other Races
-- Tattoos
-- Complex sliders (Where one slider causes others to move)
+- Presets (Not sure if I will support)
 
 ## FAQ
 
