@@ -43,9 +43,7 @@ Default Man:
 
 ## TODO
 
-- Other Races
-- Tattoos
-- Complex sliders (Where one slider causes others to move)
+- Presets (Not sure if I will support)
 
 ## FAQ
 
