@@ -24,13 +24,15 @@ Via Github:
 Download the release .zip [here](https://github.com/octo-org/octo-repo/releases/latest) and unzip it.
 
 Open the directory and run:
+
+`python -m pip install -r requirements.txt`
 `python main.py`
 
 This will pop up a GUI for you to select the `default` and `target` ini file you wish to use. 
 
 (Defaults found in the /default directory, example woman in /templates directory)
 
-I have it set to a `2` second delay, after pressing 'run', select the first attribute of the 'body' category. (See Photo)
+I have it set to a `3` second delay, after pressing 'run', select the first attribute of the 'body' category. (See Photo)
 
 <details>
 <summary>Starting Screenshot</summary>
@@ -61,11 +63,10 @@ I have it set to a `2` second delay, after pressing 'run', select the first attr
 
 
 
-
-
 ## Preview
 
-![guiGif_c](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/6241cc08-29fe-4525-ae64-65e8d0a65156)
+![gitGif](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/beb9b701-8a2d-4447-be86-f9e8a387a5a2)
+
 
 
 ## TODO
