@@ -295,6 +295,7 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     window_set_foreground(dd2_window)
     app.schedule_log(f"Please highlight 'Body > Body > Height and do not move the mouse!")
     app.schedule_log(f"Waiting for 3 seconds...")
+    app.schedule_log(f"To stop the app, close the Console window!")
     time.sleep(3)
 
     processed_attributes = 0
