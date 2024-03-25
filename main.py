@@ -293,7 +293,9 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
         app.schedule_log(f"Could not find game window {window_name} - If you are using the 'Character Creator' make sure to click the toggle!")
         
     window_set_foreground(dd2_window)
-    time.sleep(2)
+    app.schedule_log(f"Please highlight 'Body > Body > Height and do not move the mouse!")
+    app.schedule_log(f"Waiting for 3 seconds...")
+    time.sleep(3)
 
     processed_attributes = 0
     processed_categories = 0
