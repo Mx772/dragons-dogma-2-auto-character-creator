@@ -129,6 +129,7 @@ class App(tk.Tk):
         self.title("DD2 Auto Slider")
         self.geometry("600x400")
 
+        self.window_name_var = tk.StringVar(value="Character Creator & Storage")
         self.default_file = tk.StringVar()
         self.target_file = tk.StringVar()
         self.log_messages = tk.StringVar()
@@ -160,6 +161,14 @@ class App(tk.Tk):
         target_entry.grid(row=1, column=1)
         target_button = tk.Button(frame, text="Browse", command=self.select_target_file)
         target_button.grid(row=1, column=2)
+        
+        # Create a label for the toggle box
+        toggle_label = tk.Label(frame, text="DD2 CC")
+        toggle_label.grid(row=1, column=3)
+
+        # Create a checkbox for toggling the window name
+        self.toggle_checkbox = tk.Checkbutton(frame, text="", variable=self.window_name_var, onvalue="Dragon's Dogma 2", offvalue="Character Creator & Storage")
+        self.toggle_checkbox.grid(row=1, column=4)
         
         console_frame = tk.Frame(self)
         console_frame.pack(fill="both", expand=True)
@@ -201,6 +210,7 @@ class App(tk.Tk):
     def run_program(self):
         default_file = self.default_file.get()
         target_file = self.target_file.get()
+        window_name = self.window_name_var.get()
 
         if default_file and target_file:
             # Call your main function with the selected files
@@ -208,7 +218,7 @@ class App(tk.Tk):
         else:
             print("Please select both files.")
 
-def main(default_file: str, target_file: str) -> None:
+def main(default_file: str, target_file: str, window_name: str) -> None:
     """
     Main function to adjust character attributes based on configuration files.
     """
@@ -233,7 +243,7 @@ def main(default_file: str, target_file: str) -> None:
         """Change to the next category by simulating key presses."""
         simulate_key_press([ESC, S, SP])
 
-    dd2_window = win32gui.FindWindow(None, "Character Creator & Storage")
+    dd2_window = win32gui.FindWindow(None, window_name)
     window_set_foreground(dd2_window)
     time.sleep(2)
 
