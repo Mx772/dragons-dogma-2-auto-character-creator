@@ -287,6 +287,11 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
         simulate_key_press([ESC, S, SP])
 
     dd2_window = win32gui.FindWindow(None, window_name)
+    if dd2_window:
+        app.schedule_log(f"Found window for {window_name}!")
+    else:
+        app.schedule_log(f"Could not find game window {window_name} - If you are using the 'Character Creator' make sure to click the toggle!")
+        
     window_set_foreground(dd2_window)
     time.sleep(2)
 
