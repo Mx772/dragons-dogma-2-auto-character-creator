@@ -1,14 +1,22 @@
-            - name: PyInstaller Windows
-  # You may pin to the exact commit or the version.
-  # uses: JackMcKew/pyinstaller-action-windows@a8dee21ad01bbc7e7363d445bb632691b95ba057
-  uses: JackMcKew/pyinstaller-action-windows@v0.1.2
-  with:
-    # Directory containing source code (optional requirements.txt).
-    path: .
-    # Specify a custom URL for PYPI
-    pypi_url: # optional, default is https://pypi.python.org/
-    # Specify a custom URL for PYPI Index
-    pypi_index_url: # optional, default is https://pypi.python.org/simple
-    # Specify a file path for .spec file
-    spec: # optional, default is 
-          
+name: Package exe with PyInstaller - Windows
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: PyInstaller Windows
+      uses: JackMcKew/pyinstaller-action-windows@python3-10-pyinstaller-5-3
+      with:
+        path: .
+
+    # - uses: actions/upload-artifact@v2
+    #   with:
+    #     name: my-exe
+    #     path: src/dist/windows # or path/to/artifact
