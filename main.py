@@ -4,6 +4,7 @@ import win32gui
 import configparser
 import time
 from typing import Dict, List
+from typing import Union
 import os
 
 # CONFIG
@@ -11,22 +12,35 @@ debug = False
 
 from directkeys import PressKey, ReleaseKey, D, A, S, ESC, SP, E
 
-def read_config(config_file: str) -> Dict[str, int]:
+def read_config(config_file: str) -> tuple[Dict[str, str], Dict[str, Dict[str, int]]]:
     """
-    Read a configuration file and return a dictionary of key-value pairs.
+    Read a configuration file and return a dictionary of key-value pairs, grouped by sections.
+    The '[Info]' section is handled separately with string values.
 
     Args:
         config_file (str): The path to the configuration file.
 
     Returns:
-        Dict[str, int]: A dictionary containing the configuration key-value pairs.
+        Dict[str, Dict[str, Union[int, str]]]: A dictionary where the keys are section names,
+            and the values are dictionaries containing the key-value pairs for that section.
+            The '[Info]' section is a separate dictionary with string values.
     """
     config = configparser.ConfigParser()
     config.read(config_file)
-    return {
-        key: int(value) if value else -200
-        for key, value in config['Character'].items()
-    }
+
+    info_section = {}
+    attributes_section = {}
+
+    for section in config.sections():
+        if section == 'Info':
+            info_section = {key: value for key, value in config[section].items()}
+        else:
+            attributes_section[section] = {
+                key: int(value) if value else -200
+                for key, value in config[section].items()
+            }
+
+    return info_section, attributes_section
 
 def window_set_foreground(window_handle):
     """
@@ -267,8 +281,8 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     """
     Main function to adjust character attributes based on configuration files.
     """
-    default_attributes = read_config(default_file)
-    target_attributes = read_config(target_file)
+    _, default_attributes = read_config(default_file)
+    info, target_attributes = read_config(target_file)
 
     pages = {
         "page_1": [9, 7, 12, 6, 4],
@@ -305,59 +319,67 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     processed_categories = 0
     processed_pages = 0
     
-    for i, attribute_name in enumerate(attributes):
+    for section_name, section_attributes in default_attributes.items():
         page_name = f"page_{processed_pages + 1}"
         
-        # If the target_attribute has an attribute of that name.
-        if target_attributes[attribute_name]:
-            
-            # If it's not '-200' which is set by config-reader to an arbitrarily low number which means it wasn't set. 
-            if target_attributes[attribute_name] == -200:
-                app.schedule_log(f"Could not find a value for {attribute_name} in target attribute file, using default of {attributes[attribute_name]}!")
-                
-            elif 'edit' in attribute_name:
-                # If the attribute is a toggle
-                if target_attributes[attribute_name] == 1:
-                    
-                    # If target config has enabled a secondary
-                    app.schedule_log(f"Enabling secondary section for {attribute_name}")
-                    PressKey(SP)
-                    time.sleep(sleep_time)
-                    ReleaseKey(SP)
-                    time.sleep(sleep_time)
-                    print(f'Adding addl fields: {pages[page_name][processed_categories]} += {pages[page_name][processed_categories]-1}')
-                    pages[page_name][processed_categories] += pages[page_name][processed_categories]-1
-            else:
-                
-                # If hell - If it's a preset value, skip it since it makes no difference
-                if 'preset' not in attribute_name:
-                    adjust_slider(attributes[attribute_name], target_attributes[attribute_name], attribute_name, sleep_time)
-                    attributes = update_dependent_attributes(attribute_name, target_attributes[attribute_name], attributes)
-                else:
-                    app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
+        if section_name in target_attributes:
+            target_section = target_attributes[section_name]
         else:
-            app.schedule_log(f"Could not find {attribute_name} in target attribute file, using default of {attributes[attribute_name]}!")
-            
-        processed_attributes += 1
-
-        if debug:
-            print(f"Performing Checks for:\n{processed_attributes} == {pages[page_name][processed_categories]}\n{processed_categories + 1} == {len(pages[page_name])}\ni: {i}\n attribute_name: {attribute_name}")
-
-        if processed_attributes == pages[page_name][processed_categories]:
-            if processed_categories + 1 == len(pages[page_name]):
-                processed_attributes = 0
-                processed_categories = 0
-                processed_pages += 1
-                next_page()
-                continue
+            app.schedule_log(f"Could not find section '{section_name}' in target attribute file.")
+            continue
+        
+        attribute_list = list(section_attributes.keys())  
+        for i, attribute_name in enumerate(attribute_list):
+            if attribute_name in target_section:
+                target_value = target_section[attribute_name]
+              
+                # If it's not '-200' which is set by config-reader to an arbitrarily low number which means it wasn't set. 
+                if target_value == -200:
+                    app.schedule_log(f"Could not find a value for {attribute_name} in target attribute file, using default of {attributes[section_name][attribute_name]}!")
+                    
+                elif 'edit' in attribute_name:
+                    # If the attribute is a toggle
+                    if target_value == 1:
+                        
+                        # If target config has enabled a secondary
+                        app.schedule_log(f"Enabling secondary section for {attribute_name}")
+                        PressKey(SP)
+                        time.sleep(sleep_time)
+                        ReleaseKey(SP)
+                        time.sleep(sleep_time)
+                        print(f'Adding addl fields: {pages[page_name][processed_categories]} += {pages[page_name][processed_categories]-1}')
+                        pages[page_name][processed_categories] += pages[page_name][processed_categories]-1
+                else:
+                    
+                    # If hell - If it's a preset value, skip it since it makes no difference
+                    if 'preset' not in attribute_name:
+                        adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, sleep_time)
+                        attributes[section_name] = update_dependent_attributes(attribute_name, target_value, attributes[section_name])
+                    else:
+                        app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
             else:
-                processed_categories += 1
-                processed_attributes = 0
-                change_category()
-                continue
+                app.schedule_log(f"Could not find {attribute_name} in target attribute file, using default of {attributes[section_name][attribute_name]}!")
+                
+            processed_attributes += 1
 
-        if i < len(attributes) - 1:
-            simulate_key_press([S], sleep_time)
+            if debug:
+                print(f"Performing Checks for:\n{processed_attributes} == {pages[page_name][processed_categories]}\n{processed_categories + 1} == {len(pages[page_name])}\ni: {i}\n attribute_name: {attribute_name}")
+
+            if processed_attributes == pages[page_name][processed_categories]:
+                if processed_categories + 1 == len(pages[page_name]):
+                    processed_attributes = 0
+                    processed_categories = 0
+                    processed_pages += 1
+                    next_page()
+                    continue
+                else:
+                    processed_categories += 1
+                    processed_attributes = 0
+                    change_category()
+                    continue
+
+            if i < len(attributes) - 1:
+                simulate_key_press([S], sleep_time)
 
     app.schedule_log("Character creation complete!")
 
