@@ -310,18 +310,34 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
         
         # If the target_attribute has an attribute of that name.
         if target_attributes[attribute_name]:
+            
             # If it's not '-200' which is set by config-reader to an arbitrarily low number which means it wasn't set. 
             if target_attributes[attribute_name] == -200:
                 app.schedule_log(f"Could not find a value for {attribute_name} in target attribute file, using default of {attributes[attribute_name]}!")
+                
+            elif 'edit' in attribute_name:
+                # If the attribute is a toggle
+                if target_attributes[attribute_name] == 1:
+                    
+                    # If target config has enabled a secondary
+                    app.schedule_log(f"Enabling secondary section for {attribute_name}")
+                    PressKey(SP)
+                    time.sleep(sleep_time)
+                    ReleaseKey(SP)
+                    time.sleep(sleep_time)
+                    print(f'Adding addl fields: {pages[page_name][processed_categories]} += {pages[page_name][processed_categories]-1}')
+                    pages[page_name][processed_categories] += pages[page_name][processed_categories]-1
             else:
+                
                 # If hell - If it's a preset value, skip it since it makes no difference
                 if 'preset' not in attribute_name:
                     adjust_slider(attributes[attribute_name], target_attributes[attribute_name], attribute_name, sleep_time)
                     attributes = update_dependent_attributes(attribute_name, target_attributes[attribute_name], attributes)
                 else:
-                    app.schedule_log(f"Skipipng preset for {attribute_name} so it doesn't change values!")
+                    app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
         else:
             app.schedule_log(f"Could not find {attribute_name} in target attribute file, using default of {attributes[attribute_name]}!")
+            
         processed_attributes += 1
 
         if debug:
