@@ -23,7 +23,10 @@ def read_config(config_file: str) -> Dict[str, int]:
     """
     config = configparser.ConfigParser()
     config.read(config_file)
-    return {key: int(value) for key, value in config['Character'].items()}
+    return {
+        key: int(value) if value else -200
+        for key, value in config['Character'].items()
+    }
 
 def window_set_foreground(window_handle):
     """
@@ -304,8 +307,14 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     
     for i, attribute_name in enumerate(attributes):
         page_name = f"page_{processed_pages + 1}"
-        adjust_slider(attributes[attribute_name], target_attributes[attribute_name], attribute_name, sleep_time)
-        attributes = update_dependent_attributes(attribute_name, target_attributes[attribute_name], attributes)
+        if target_attributes[attribute_name]:
+            if target_attributes[attribute_name] == -200:
+                app.schedule_log(f"Could not find a value for {attribute_name} in target attribute file, using default of {attributes[attribute_name]}!")
+            else:
+                adjust_slider(attributes[attribute_name], target_attributes[attribute_name], attribute_name, sleep_time)
+                attributes = update_dependent_attributes(attribute_name, target_attributes[attribute_name], attributes)
+        else:
+            app.schedule_log(f"Could not find {attribute_name} in target attribute file, using default of {attributes[attribute_name]}!")
         processed_attributes += 1
 
         if debug:
