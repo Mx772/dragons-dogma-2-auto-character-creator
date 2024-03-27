@@ -23,6 +23,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install cx_Freeze
+        pip install pywin32
         
     - name: Build EXE
       run: |
@@ -30,8 +31,12 @@ jobs:
         python setup.py build
       working-directory: ${{ github.workspace }}
         
+    - name: Zip build directory
+      run: |
+        7z a DD2AutoSlider.zip ${{ github.workspace }}\build\exe.win-amd64-3.10\*
+        
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: dist
-        path: build/exe.win-amd64-3.10 
+        name: DD2AutoSlider
+        path: DD2AutoSlider.zip
