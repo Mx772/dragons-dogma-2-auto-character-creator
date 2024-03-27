@@ -4,7 +4,6 @@ import win32gui
 import configparser
 import time
 from typing import Dict, List
-from typing import Union
 import os
 
 # CONFIG
@@ -63,7 +62,7 @@ def simulate_key_press(keys: List[str], sleep_time: float = 0.02) -> None:
         sleep_time (float, optional): The time to sleep between key presses in seconds. Defaults to 0.02.
     """
     for key in keys:
-        print(f"Pressing {key}")
+        # print(f"Pressing {key}")
         PressKey(key)
         time.sleep(sleep_time)
         ReleaseKey(key)
@@ -285,13 +284,13 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     slider_time = .02
     
 
-    def next_page() -> None:
-        """Go to the next page by simulating key presses."""
-        simulate_key_press([E], sleep_time)
+    # def next_page() -> None:
+    #     """Go to the next page by simulating key presses."""
+    #     simulate_key_press([E], sleep_time)
 
-    def change_category() -> None:
-        """Change to the next category by simulating key presses."""
-        simulate_key_press([S], sleep_time)
+    # def change_category() -> None:
+    #     """Change to the next category by simulating key presses."""
+    #     simulate_key_press([S], sleep_time)
 
     dd2_window = win32gui.FindWindow(None, window_name)
     if dd2_window:
@@ -325,11 +324,10 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
             page_name = new_page
             
             # If you are at the category page, escape from category then go to next page
-            if location == "cat":
+            if location == "category":
                 simulate_key_press([ESC, E], sleep_time)
             else:
                 simulate_key_press([E], sleep_time)
-            # next_page()
             
         # If the section exists within target file, enter it
         if section_name in target_attributes:
@@ -337,11 +335,11 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
             print(f"Found section {section_name} in target_attributes, entering")
             # Enter Section
             simulate_key_press([SP], sleep_time)
-            location = "cat"
+            location = "category"
         else:
             # If it doesn't either leave the category and go down, or just go down
             app.schedule_log(f"Could not find section '{section_name}' in target attribute file.")
-            if location == "cat":
+            if location == "category":
                 simulate_key_press([ESC, S], sleep_time)
                 location = "page"
             else:
@@ -360,7 +358,6 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
                 elif 'edit' in attribute_name:
                     # If the attribute is a toggle
                     if target_value == 1:
-                        
                         # If target config has enabled a secondary
                         app.schedule_log(f"Enabling secondary section for {attribute_name}")
                         edit = True
@@ -372,7 +369,6 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
                     if target_value == 1:
                         simulate_key_press([SP, S], sleep_time)
                 else:
-                    
                     # If hell - If it's a preset value, skip it since it makes no difference
                     if 'preset' not in attribute_name:
                         adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, slider_time)
@@ -383,16 +379,14 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
                         simulate_key_press([S], sleep_time)
             else:
                 app.schedule_log(f"Could not find {attribute_name} in target attribute file, using default of {attributes[section_name][attribute_name]}!")
-        print(edit)
-        if location == "cat" and edit:
+
+        if location == "category" and edit:
             print("Skipping move-down as edit = true")
-        elif location == "cat":
-            print("meow")
+        elif location == "category":
             simulate_key_press([ESC, S], sleep_time)
             location = "page"
         else:
             simulate_key_press([S], sleep_time)
-        
 
     app.schedule_log("Character creation complete!")
 
