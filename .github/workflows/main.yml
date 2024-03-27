@@ -26,7 +26,6 @@ jobs:
         
     - name: Build EXE
       run: |
-        dir /s
         python setup.py build
       working-directory: ${{ github.workspace }}
         
