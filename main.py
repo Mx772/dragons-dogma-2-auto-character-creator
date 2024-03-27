@@ -86,7 +86,7 @@ attribute_dependencies = {
     "left_leg_scar_overall_scale": ["left_leg_scar_horz_scale", "left_leg_scar_vert_scale"],
 }
    
-def update_dependent_attributes(primary_attribute: str, new_value: int, attributes: dict) -> dict:
+def update_dependent_attributes(primary_attribute: str, new_value: int, attributes: dict, page_name: str) -> dict:
     """
     Update the dependent attributes based on the primary attribute's new value.
 
@@ -94,22 +94,33 @@ def update_dependent_attributes(primary_attribute: str, new_value: int, attribut
         primary_attribute (str): The name of the primary attribute that was changed.
         new_value (int): The new value of the primary attribute.
         attributes (dict): The dictionary containing the attribute values.
+        page_name (str): The name of the page.
 
     Returns:
         dict: The updated dictionary with the dependent attributes' values changed.
     """
+
     print(f"{primary_attribute}, {new_value}")
+
     updated_attributes = attributes.copy()
+
     if primary_attribute in attribute_dependencies:
         print(f"found {primary_attribute}")
         dependent_attributes = attribute_dependencies[primary_attribute]
         print(f"{dependent_attributes}")
+
         primary_old_value = attributes[primary_attribute]
         primary_value_change = new_value - primary_old_value
 
         for dependent_attribute in dependent_attributes:
             old_value = attributes[dependent_attribute]
             updated_value = old_value + primary_value_change
+
+            if page_name == 'markings':
+                updated_value = max(0, min(400, updated_value))
+            else:
+                updated_value = max(-100, min(100, updated_value))
+
             print(f"Updating {dependent_attribute} from {old_value} to {updated_value}")
             updated_attributes[dependent_attribute] = updated_value
 
@@ -127,6 +138,9 @@ def adjust_slider(current_value: int, target_value: int, attribute_name: str, sl
     """
     app.schedule_log(f"Going from {current_value} to {target_value} for {attribute_name}")
     app.update()
+    
+    if 'chest_shape' in attribute_name:
+        target_value = target_value * 2
 
     if current_value < target_value:
         for _ in range(target_value - current_value):
@@ -372,7 +386,7 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
                     # If hell - If it's a preset value, skip it since it makes no difference
                     if 'preset' not in attribute_name:
                         adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, slider_time)
-                        attributes[section_name] = update_dependent_attributes(attribute_name, target_value, attributes[section_name])
+                        attributes[section_name] = update_dependent_attributes(attribute_name, target_value, attributes[section_name], page_name)
                         simulate_key_press([S], sleep_time)
                     else:
                         app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
