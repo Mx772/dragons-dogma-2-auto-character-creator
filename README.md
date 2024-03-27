@@ -28,23 +28,24 @@ Open the directory and run:
 python -m pip install -r requirements.txt
 python main.py
 ```
-OR
+**OR**
 Run the .exe on windows.
 
 This will pop up a GUI for you to select the `default` and `target` ini file you wish to use. 
 
 (Defaults found in the /default directory, example woman in /templates directory)
 
-I have it set to a `3` second delay, after pressing 'run', select the first attribute of the 'body' category. (See Photo)
+If you are using the Character Creator vs the game, toggle the box in the upper right. 
+
+I have it set to a `3` second delay, after pressing 'run', setup your game like the screenshot below (Cursor far left, hover on 'body' category)
 
 <details>
 <summary>Starting Screenshot</summary>
 
-![image](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/e116184d-a14e-4d45-ace2-b513a3884c62)
+![image](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/637c021c-92bc-4179-b764-c5184bc021f6)
+
 
 </details>
-
-
 
 
 > What is the 'default' profile?
@@ -74,7 +75,8 @@ I have it set to a `3` second delay, after pressing 'run', select the first attr
 
 ## TODO
 
-- Presets (Not sure if I will support)
+- Fix Images
+- Allow config of speed
 
 ## FAQ
 
