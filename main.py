@@ -32,7 +32,7 @@ def read_config(config_file: str) -> tuple[Dict[str, str], Dict[str, Dict[str, i
     attributes_section = {}
 
     for section in config.sections():
-        if section == 'Info':
+        if section == 'info':
             info_section = {key: value for key, value in config[section].items()}
         else:
             attributes_section[section] = {
@@ -63,6 +63,7 @@ def simulate_key_press(keys: List[str], sleep_time: float = 0.02) -> None:
         sleep_time (float, optional): The time to sleep between key presses in seconds. Defaults to 0.02.
     """
     for key in keys:
+        print(f"Pressing {key}")
         PressKey(key)
         time.sleep(sleep_time)
         ReleaseKey(key)
@@ -130,16 +131,10 @@ def adjust_slider(current_value: int, target_value: int, attribute_name: str, sl
 
     if current_value < target_value:
         for _ in range(target_value - current_value):
-            PressKey(D)
-            time.sleep(sleep_time)
-            ReleaseKey(D)
-            time.sleep(sleep_time)
+            simulate_key_press([D], sleep_time)
     else:
         for _ in range(current_value - target_value):
-            PressKey(A)
-            time.sleep(sleep_time)
-            ReleaseKey(A)
-            time.sleep(sleep_time)
+            simulate_key_press([A], sleep_time)
 
 class App(tk.Tk):
     def __init__(self):
@@ -264,6 +259,7 @@ class App(tk.Tk):
         self.console_text.see("end")
 
     def schedule_log(self, message):
+        print(message)
         self.after(0, self.log, message)
         
     def run_program(self):
@@ -284,24 +280,18 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     _, default_attributes = read_config(default_file)
     info, target_attributes = read_config(target_file)
 
-    pages = {
-        "page_1": [9, 7, 12, 6, 4],
-        "page_2": [1, 4, 7, 9, 12, 7, 6, 6, 8],
-        "page_3": [6, 3],
-        "page_4": [9, 6, 8, 6, 3, 5, 6, 3],
-        "page_5": [1, 17, 17, 17, 17, 17, 1, 13, 13, 13, 13, 13, 4],
-    }
-
     attributes = default_attributes.copy()
-    sleep_time = 0.02
+    sleep_time = 0.075
+    slider_time = .02
+    
 
     def next_page() -> None:
         """Go to the next page by simulating key presses."""
-        simulate_key_press([ESC, E, SP])
+        simulate_key_press([E], sleep_time)
 
     def change_category() -> None:
         """Change to the next category by simulating key presses."""
-        simulate_key_press([ESC, S, SP])
+        simulate_key_press([S], sleep_time)
 
     dd2_window = win32gui.FindWindow(None, window_name)
     if dd2_window:
@@ -313,73 +303,96 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     app.schedule_log(f"Please highlight 'Body > Body > Height and do not move the mouse!")
     app.schedule_log(f"Waiting for 3 seconds...")
     app.schedule_log(f"To stop the app, close the Console window!")
+    app.update()
     time.sleep(3)
-
-    processed_attributes = 0
-    processed_categories = 0
-    processed_pages = 0
     
+    page_name = "body"
+    location = "page"
+
     for section_name, section_attributes in default_attributes.items():
-        page_name = f"page_{processed_pages + 1}"
+        print(f"Going through {section_name}, for {section_attributes} on page: {page_name}")
         
+        # Skip secondarys if edit isn't true
+        if "_2" in section_name and edit == False:
+            print(f"Skipping {section_name} as edit is False")
+            continue
+        edit = False
+        
+        # If it's a new page, change the page
+        if page_name != section_name.split('_')[0]:
+            new_page = section_name.split('_')[0]
+            app.schedule_log(f'Changing page - From {page_name} to {new_page}')
+            page_name = new_page
+            
+            # If you are at the category page, escape from category then go to next page
+            if location == "cat":
+                simulate_key_press([ESC, E], sleep_time)
+            else:
+                simulate_key_press([E], sleep_time)
+            # next_page()
+            
+        # If the section exists within target file, enter it
         if section_name in target_attributes:
             target_section = target_attributes[section_name]
+            print(f"Found section {section_name} in target_attributes, entering")
+            # Enter Section
+            simulate_key_press([SP], sleep_time)
+            location = "cat"
         else:
+            # If it doesn't either leave the category and go down, or just go down
             app.schedule_log(f"Could not find section '{section_name}' in target attribute file.")
+            if location == "cat":
+                simulate_key_press([ESC, S], sleep_time)
+                location = "page"
+            else:
+                simulate_key_press([S], sleep_time)
             continue
-        
-        attribute_list = list(section_attributes.keys())  
-        for i, attribute_name in enumerate(attribute_list):
+
+        print(f"We are at location {location}")
+        for attribute_name in section_attributes:
             if attribute_name in target_section:
+                
                 target_value = target_section[attribute_name]
               
                 # If it's not '-200' which is set by config-reader to an arbitrarily low number which means it wasn't set. 
                 if target_value == -200:
                     app.schedule_log(f"Could not find a value for {attribute_name} in target attribute file, using default of {attributes[section_name][attribute_name]}!")
-                    
                 elif 'edit' in attribute_name:
                     # If the attribute is a toggle
                     if target_value == 1:
                         
                         # If target config has enabled a secondary
                         app.schedule_log(f"Enabling secondary section for {attribute_name}")
-                        PressKey(SP)
-                        time.sleep(sleep_time)
-                        ReleaseKey(SP)
-                        time.sleep(sleep_time)
-                        print(f'Adding addl fields: {pages[page_name][processed_categories]} += {pages[page_name][processed_categories]-1}')
-                        pages[page_name][processed_categories] += pages[page_name][processed_categories]-1
+                        edit = True
+                        simulate_key_press([SP, S], sleep_time)
+                    else:
+                        simulate_key_press([S], sleep_time)
+                elif 'closed' in attribute_name:
+                    # Special case for eyes
+                    if target_value == 1:
+                        simulate_key_press([SP, S], sleep_time)
                 else:
                     
                     # If hell - If it's a preset value, skip it since it makes no difference
                     if 'preset' not in attribute_name:
-                        adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, sleep_time)
+                        adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, slider_time)
                         attributes[section_name] = update_dependent_attributes(attribute_name, target_value, attributes[section_name])
+                        simulate_key_press([S], sleep_time)
                     else:
                         app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
+                        simulate_key_press([S], sleep_time)
             else:
                 app.schedule_log(f"Could not find {attribute_name} in target attribute file, using default of {attributes[section_name][attribute_name]}!")
-                
-            processed_attributes += 1
-
-            if debug:
-                print(f"Performing Checks for:\n{processed_attributes} == {pages[page_name][processed_categories]}\n{processed_categories + 1} == {len(pages[page_name])}\ni: {i}\n attribute_name: {attribute_name}")
-
-            if processed_attributes == pages[page_name][processed_categories]:
-                if processed_categories + 1 == len(pages[page_name]):
-                    processed_attributes = 0
-                    processed_categories = 0
-                    processed_pages += 1
-                    next_page()
-                    continue
-                else:
-                    processed_categories += 1
-                    processed_attributes = 0
-                    change_category()
-                    continue
-
-            if i < len(attributes) - 1:
-                simulate_key_press([S], sleep_time)
+        print(edit)
+        if location == "cat" and edit:
+            print("Skipping move-down as edit = true")
+        elif location == "cat":
+            print("meow")
+            simulate_key_press([ESC, S], sleep_time)
+            location = "page"
+        else:
+            simulate_key_press([S], sleep_time)
+        
 
     app.schedule_log("Character creation complete!")
 
