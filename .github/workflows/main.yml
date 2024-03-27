@@ -1,0 +1,22 @@
+name: Package exe with PyInstaller - Windows
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: PyInstaller Windows
+      uses: JackMcKew/pyinstaller-action-windows@v0.1.2
+      with:
+        path: .
+
+    # - uses: actions/upload-artifact@v2
+    #   with:
+    #     name: my-exe
+    #     path: src/dist/windows # or path/to/artifact

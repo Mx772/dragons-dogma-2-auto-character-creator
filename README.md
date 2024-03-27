@@ -15,31 +15,62 @@ Will likely require Windows, untested on other OS.
 
 ## Usage
 
+Via Git:
+
 `git clone https://github.com/Mx772/dragons-dogma-2-auto-character-creator.git`
 
+Via Github:
+
+Download the release .zip [here](https://github.com/octo-org/octo-repo/releases/latest) and unzip it.
+
 Open the directory and run:
-`python main.py`
+```
+python -m pip install -r requirements.txt
+python main.py
+```
+OR
+Run the .exe on windows.
 
 This will pop up a GUI for you to select the `default` and `target` ini file you wish to use. 
 
 (Defaults found in the /default directory, example woman in /templates directory)
 
-I have it set to a `2` second delay, after pressing 'run', select the first section of the character creator. (See Photo)
-<!-- Insert Photo -->
+I have it set to a `3` second delay, after pressing 'run', select the first attribute of the 'body' category. (See Photo)
+
+<details>
+<summary>Starting Screenshot</summary>
+
+![image](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/e116184d-a14e-4d45-ace2-b513a3884c62)
+
+</details>
+
+
 
 
 > What is the 'default' profile?
 
-Default Woman:
+
+<details>
+<summary>Default Woman</summary>
+
 ![defaultGif](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/bb7f280d-721a-4740-ac93-894916a8ab34)
 
-Default Man:
-<!-- Replace with Man Gif -->
+</details>
+
+<details>
+<summary>Default Man</summary>
+
+![male_default](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/e6811a84-5026-4c51-b06b-f4ae4d3230ea)
+
+</details>
+
 
 
 ## Preview
 
-[![ezgif-4-fc24f87209](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/107ed2f7-d2f5-40ed-b905-14eb8a779c3a)](https://i.imgur.com/UJTYH12.mp4)
+![gitGif](https://github.com/Mx772/dragons-dogma-2-auto-character-creator/assets/9059161/beb9b701-8a2d-4447-be86-f9e8a387a5a2)
+
+
 
 ## TODO
 
@@ -69,3 +100,5 @@ Copy the .ini file for the given sex and edit the values as needed.
 
 ## Credits
 directkeys.py logic via stackoverflow user `user573949` - [Post](http://stackoverflow.com/questions/14489013/simulate-python-keypresses-for-controlling-a-game)
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FMx772%2Fdragons-dogma-2-auto-character-creator%2Ftree%2Fmain&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
