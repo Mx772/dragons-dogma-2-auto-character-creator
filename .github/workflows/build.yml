@@ -35,7 +35,7 @@ jobs:
            onefile: false
            standalone: true
            product-name: DD2AutoSlider
-           include-data-dir: templates, defaults
+           include-data-dir: templates=templates, defaults=defaults
     
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
