@@ -127,6 +127,9 @@ def adjust_slider(current_value: int, target_value: int, attribute_name: str, sl
     """
     app.schedule_log(f"Going from {current_value} to {target_value} for {attribute_name}")
     app.update()
+    
+    if 'chest_shape' in attribute_name:
+        target_value = target_value * 2
 
     if current_value < target_value:
         for _ in range(target_value - current_value):
