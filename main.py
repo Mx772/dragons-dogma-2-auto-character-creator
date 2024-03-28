@@ -321,7 +321,8 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     
     page_name = "body"
     location = "page"
-
+    edit = False
+    
     for section_name, section_attributes in default_attributes.items():
         print(f"Going through {section_name}, for {section_attributes} on page: {page_name}")
         
@@ -329,7 +330,6 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
         if "_2" in section_name and edit == False:
             print(f"Skipping {section_name} as edit is False")
             continue
-        edit = False
         
         # If it's a new page, change the page
         if page_name != section_name.split('_')[0]:
@@ -348,8 +348,9 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
             target_section = target_attributes[section_name]
             print(f"Found section {section_name} in target_attributes, entering")
             # Enter Section
-            simulate_key_press([SP], sleep_time)
-            location = "category"
+            if not edit:
+                simulate_key_press([SP], sleep_time)
+                location = "category"
         else:
             # If it doesn't either leave the category and go down, or just go down
             app.schedule_log(f"Could not find section '{section_name}' in target attribute file.")
@@ -359,7 +360,8 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
             else:
                 simulate_key_press([S], sleep_time)
             continue
-
+        
+        edit = False
         print(f"We are at location {location}")
         for attribute_name in section_attributes:
             if attribute_name in target_section:
