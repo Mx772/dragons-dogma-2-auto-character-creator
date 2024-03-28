@@ -393,6 +393,8 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
                     # Special case for eyes
                     if target_value == 1:
                         simulate_key_press([SP, S], sleep_time)
+                    else:
+                        simulate_key_press([S], sleep_time)
                 else:
                     # If hell - If it's a preset value, skip it since it makes no difference
                     adjust_logic(attributes, section_name, attribute_name, target_value, slider_time, sleep_time, page_name)
