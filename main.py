@@ -286,6 +286,15 @@ class App(tk.Tk):
         else:
             print("Please select both files.")
 
+def adjust_logic(attributes, section_name, attribute_name, target_value, slider_time, sleep_time, page_name):
+    if 'preset' not in attribute_name:
+        adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, slider_time)
+        attributes[section_name] = update_dependent_attributes(attribute_name, target_value, attributes[section_name], page_name)
+        simulate_key_press([S], sleep_time)
+    else:
+        app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
+        simulate_key_press([S], sleep_time)
+
 def main(default_file: str, target_file: str, window_name: str) -> None:
     """
     Main function to adjust character attributes based on configuration files.
@@ -386,15 +395,11 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
                         simulate_key_press([SP, S], sleep_time)
                 else:
                     # If hell - If it's a preset value, skip it since it makes no difference
-                    if 'preset' not in attribute_name:
-                        adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, slider_time)
-                        attributes[section_name] = update_dependent_attributes(attribute_name, target_value, attributes[section_name], page_name)
-                        simulate_key_press([S], sleep_time)
-                    else:
-                        app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
-                        simulate_key_press([S], sleep_time)
+                    adjust_logic(attributes, section_name, attribute_name, target_value, slider_time, sleep_time, page_name)
             else:
+                target_value = attributes[section_name][attribute_name]
                 app.schedule_log(f"Could not find {attribute_name} in target attribute file, using default of {attributes[section_name][attribute_name]}!")
+                adjust_logic(attributes, section_name, attribute_name, target_value, slider_time, sleep_time, page_name)
 
         if location == "category" and edit:
             print("Skipping move-down as edit = true")
