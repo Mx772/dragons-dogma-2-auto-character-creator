@@ -36,7 +36,7 @@ jobs:
            standalone: true
            product-name: DD2AutoSlider
            include-data-dir: templates=templates, defaults=defaults
-           enable-plugin: tk-inter
+           enable-plugins: tk-inter
     
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
