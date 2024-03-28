@@ -286,6 +286,15 @@ class App(tk.Tk):
         else:
             print("Please select both files.")
 
+def adjust_logic(attributes, section_name, attribute_name, target_value, slider_time, sleep_time, page_name):
+    if 'preset' not in attribute_name:
+        adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, slider_time)
+        attributes[section_name] = update_dependent_attributes(attribute_name, target_value, attributes[section_name], page_name)
+        simulate_key_press([S], sleep_time)
+    else:
+        app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
+        simulate_key_press([S], sleep_time)
+
 def main(default_file: str, target_file: str, window_name: str) -> None:
     """
     Main function to adjust character attributes based on configuration files.
@@ -321,7 +330,8 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
     
     page_name = "body"
     location = "page"
-
+    edit = False
+    
     for section_name, section_attributes in default_attributes.items():
         print(f"Going through {section_name}, for {section_attributes} on page: {page_name}")
         
@@ -329,7 +339,6 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
         if "_2" in section_name and edit == False:
             print(f"Skipping {section_name} as edit is False")
             continue
-        edit = False
         
         # If it's a new page, change the page
         if page_name != section_name.split('_')[0]:
@@ -348,8 +357,9 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
             target_section = target_attributes[section_name]
             print(f"Found section {section_name} in target_attributes, entering")
             # Enter Section
-            simulate_key_press([SP], sleep_time)
-            location = "category"
+            if not edit:
+                simulate_key_press([SP], sleep_time)
+                location = "category"
         else:
             # If it doesn't either leave the category and go down, or just go down
             app.schedule_log(f"Could not find section '{section_name}' in target attribute file.")
@@ -359,7 +369,8 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
             else:
                 simulate_key_press([S], sleep_time)
             continue
-
+        
+        edit = False
         print(f"We are at location {location}")
         for attribute_name in section_attributes:
             if attribute_name in target_section:
@@ -384,15 +395,11 @@ def main(default_file: str, target_file: str, window_name: str) -> None:
                         simulate_key_press([SP, S], sleep_time)
                 else:
                     # If hell - If it's a preset value, skip it since it makes no difference
-                    if 'preset' not in attribute_name:
-                        adjust_slider(attributes[section_name][attribute_name], target_value, attribute_name, slider_time)
-                        attributes[section_name] = update_dependent_attributes(attribute_name, target_value, attributes[section_name], page_name)
-                        simulate_key_press([S], sleep_time)
-                    else:
-                        app.schedule_log(f"Skipping preset for {attribute_name} so it doesn't change values!")
-                        simulate_key_press([S], sleep_time)
+                    adjust_logic(attributes, section_name, attribute_name, target_value, slider_time, sleep_time, page_name)
             else:
+                target_value = attributes[section_name][attribute_name]
                 app.schedule_log(f"Could not find {attribute_name} in target attribute file, using default of {attributes[section_name][attribute_name]}!")
+                adjust_logic(attributes, section_name, attribute_name, target_value, slider_time, sleep_time, page_name)
 
         if location == "category" and edit:
             print("Skipping move-down as edit = true")
