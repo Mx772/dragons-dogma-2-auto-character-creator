@@ -13,6 +13,17 @@ Will require Python to be installed, tested working on `Python 3.10.11`.
 
 Will likely require Windows, untested on other OS.
 
+## Preset Creation
+
+As of v0.0.9, a new .exe and python script is included named `DD2AutoSlider-Creator`. 
+
+It is a commandline script to help you create new presets!
+
+You select the base/default, then can enter for each section. 
+If you wish to skip the rest of the tool, type 'skip' in a field where it expects a number (So an attribute, not asking if you want to skip a section)
+
+If you want to add a preset to the templates folder, please open an issue and use the 'template/preset' option!
+
 ## Usage
 
 Via Git:
