@@ -22,7 +22,7 @@ It is a commandline script to help you create new presets!
 You select the base/default, then can enter for each section. 
 If you wish to skip the rest of the tool, type 'skip' in a field where it expects a number (So an attribute, not asking if you want to skip a section)
 
-If you want to add a preset to the templates folder, please open an issue and use the 'template/preset' option!
+If you want to add a preset to the templates folder, please open an issue and use the 'template/preset' option OR for pull/code credit, open a Pull Request with it! 
 
 ## Usage
 
