@@ -39,7 +39,7 @@ for section in config.sections():
         if section == "info":
             new_value = input(f"What is the value for {option} (default: {default_value})? ")
             if new_value:
-                config.set(section, option, new_value)
+                config.set(section, option, f'"{new_value}"')
         else:
             while True:
                 new_value = input(f"What is the value for {option} (default: {default_value})? ")
