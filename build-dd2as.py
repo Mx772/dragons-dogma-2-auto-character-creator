@@ -1,7 +1,7 @@
 import sys
 from cx_Freeze import setup, Executable
 
-packages = ["win32gui"]
+packages = ["win32gui", "src.directkeys"]
 
 build_exe_options = {
     "excludes": ["http", "html", "unittest", "urllib", "test", "email",],
@@ -15,7 +15,7 @@ build_exe_options = {
 
 executables = [
     Executable(
-        "main.py",
+        "src/main.py",
         copyright="Copyright (C) 2024 Mx772",
         shortcut_name="DD2AutoSlider",
         shortcut_dir="DD2AutoSlider",
@@ -25,7 +25,6 @@ executables = [
 
 setup(
     name="DD2AutoSlider",
-    version="0.0.8",
     description="AutoSlider for DD2 Character Creation",
     options={"build_exe": build_exe_options},
     executables=executables,
