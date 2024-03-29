@@ -24,6 +24,17 @@ If you wish to skip the rest of the tool, type 'skip' in a field where it expect
 
 If you want to add a preset to the templates folder, please open an issue and use the 'template/preset' option OR for pull/code credit, open a Pull Request with it! 
 
+## Included Presets/templates:
+- Arwen by [Affectionate_Bad8720](https://www.reddit.com/r/fashiondogma/comments/1bfquvi/arwen_undomiel/)
+- Asian Girl by [Nanal0818](https://www.reddit.com/r/fashiondogma/comments/1bgyw62/asian_girl/)
+- Ciri v3 by [Jayah_](https://www.reddit.com/r/fashiondogma/comments/1bhxsrd/ciri_the_witcher_3_sliders/)
+- Ciri v3 (en Francais) by [Jiboudounet](https://www.reddit.com/r/fashiondogma/comments/1bhxsrd/ciri_the_witcher_3_sliders/kvl0yes/)
+- Daenerys/Khaleesi by [Account deleted (CharacterCreationArt?)](https://www.reddit.com/r/fashiondogma/comments/1bavyle/daenerys_targaryen/)
+- Unnamed by [Far_Leading2516](https://www.reddit.com/r/fashiondogma/comments/1bl5r97/excited_to_finally_begin_my_journey/)
+- Frieren by [VanVulten](https://www.reddit.com/r/fashiondogma/comments/1bhzyw6/frieren_attempt/)
+- Unnamed Pawn by [ScarletRhi](https://www.reddit.com/r/fashiondogma/comments/1bhqji3/my_arisen_and_pawn_are_ready/)
+- Scarlett Johansson by [HevsCreations](https://www.reddit.com/r/fashiondogma/comments/1bj6g34/scarlett_johansson/)
+
 ## Usage
 
 Via Git:
