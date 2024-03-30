@@ -9,7 +9,7 @@ import os
 # CONFIG
 debug = False
 
-from src.directkeys import PressKey, ReleaseKey, D, A, S, ESC, SP, E
+from directkeys import PressKey, ReleaseKey, D, A, S, ESC, SP, E
 
 def read_config(config_file: str) -> tuple[Dict[str, str], Dict[str, Dict[str, int]]]:
     """

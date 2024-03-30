@@ -1,7 +1,9 @@
 import sys
 from cx_Freeze import setup, Executable
 
-packages = ["win32gui", "src.directkeys"]
+sys.path.append('src')
+
+packages = ["win32gui", "src"]
 
 build_exe_options = {
     "excludes": ["http", "html", "unittest", "urllib", "test", "email",],
