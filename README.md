@@ -7,6 +7,12 @@ A default profile which is used to find the original value, and a target profile
 
 The script then goes through each page simulating key presses to set the 'default' character to the desired. 
 
+(Also available on [Nexus Mods](https://www.nexusmods.com/dragonsdogma2/mods/64?tab=description))
+
+**Note:** Nexus mods Quarantines the file due to it containing a zip within a zip; but also because it controls the keyboard, so they flag it as potentially malicious (Keylogger). 
+
+However, due to the way the program functions (by emulating keypresses fast to move sliders); this cannot be avoided
+
 ## Installation
 As all modules are python-native, it should run without any installation. 
 Will require Python to be installed, tested working on `Python 3.10.11`.
