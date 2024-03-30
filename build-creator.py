@@ -22,7 +22,6 @@ executables = [
 
 setup(
     name="DD2AutoSlider-Creator",
-    version="0.0.1",
     description="AutoSlider Creator for DD2 Character Creation",
     options={"build_exe": build_exe_options},
     executables=executables,

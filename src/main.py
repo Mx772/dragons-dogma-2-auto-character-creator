@@ -106,6 +106,7 @@ def update_dependent_attributes(primary_attribute: str, new_value: int, attribut
 
     if primary_attribute in attribute_dependencies:
         print(f"found {primary_attribute}")
+
         dependent_attributes = attribute_dependencies[primary_attribute]
         print(f"{dependent_attributes}")
 
@@ -113,16 +114,19 @@ def update_dependent_attributes(primary_attribute: str, new_value: int, attribut
         primary_value_change = new_value - primary_old_value
 
         for dependent_attribute in dependent_attributes:
-            old_value = attributes[dependent_attribute]
-            updated_value = old_value + primary_value_change
+            if dependent_attribute in attributes:
+                old_value = attributes[dependent_attribute]
+                updated_value = old_value + primary_value_change
 
-            if page_name == 'markings':
-                updated_value = max(0, min(400, updated_value))
+                if page_name == 'markings':
+                    updated_value = max(0, min(400, updated_value))
+                else:
+                    updated_value = max(-100, min(100, updated_value))
+
+                print(f"Updating {dependent_attribute} from {old_value} to {updated_value}")
+                updated_attributes[dependent_attribute] = updated_value
             else:
-                updated_value = max(-100, min(100, updated_value))
-
-            print(f"Updating {dependent_attribute} from {old_value} to {updated_value}")
-            updated_attributes[dependent_attribute] = updated_value
+                print(f"{dependent_attribute} not found in attributes, skipping update.")
 
     return updated_attributes
 
