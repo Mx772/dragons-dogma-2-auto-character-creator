@@ -61,7 +61,7 @@ for section in config.sections():
         break
 
 # Get the name from the [info] section
-output_file = f"{config.get('info', 'name')}.ini"
+output_file = f"{config.get('info', 'name')}.ini".replace('"', '')
 
 # Write the updated config to the output file
 with open(output_file, "w") as configfile:
