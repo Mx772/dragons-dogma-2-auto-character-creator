@@ -4,7 +4,7 @@ from cx_Freeze import setup, Executable
 
 sys.path.append('src')
 
-packages = ["win32gui", "src"]
+packages = ["pywin32", "src"]
 
 build_exe_options = {
     "excludes": ["http", "html", "unittest", "urllib", "test", "email",],
