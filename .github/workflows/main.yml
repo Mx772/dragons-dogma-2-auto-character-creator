@@ -28,7 +28,8 @@ jobs:
     - name: Install pywin32
       run: |
         pip install pywin32
-        python Scripts/pywin32_postinstall.py -install
+        PYWIN32_PATH=$(python -c "import site; print(site.getsitepackages()[0])")
+        python "$PYWIN32_PATH/pywin32_postinstall.py" -install
       shell: bash
         
     - name: Build EXE
