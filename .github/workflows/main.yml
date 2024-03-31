@@ -28,7 +28,7 @@ jobs:
     - name: Build EXE
       run: |
         dir
-        python setup.py build
+        python build-dd2as.py build
       working-directory: ${{ github.workspace }}
         
     - name: Zip build directory
