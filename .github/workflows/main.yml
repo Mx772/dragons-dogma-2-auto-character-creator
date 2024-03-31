@@ -31,12 +31,12 @@ jobs:
         python build-dd2as.py build
       working-directory: ${{ github.workspace }}
         
-    - name: Zip build directory
-      run: |
-        7z a DD2AutoSlider.zip ${{ github.workspace }}\build\DD2AutoSlider\*
+    # - name: Zip build directory
+    #   run: |
+    #     7z a DD2AutoSlider.zip ${{ github.workspace }}\build\DD2AutoSlider\*
         
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: DD2AutoSlider
-        path: DD2AutoSlider.zip
+        path: ${{ github.workspace }}\build\DD2AutoSlider
