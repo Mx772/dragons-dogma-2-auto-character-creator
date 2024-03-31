@@ -7,6 +7,12 @@ A default profile which is used to find the original value, and a target profile
 
 The script then goes through each page simulating key presses to set the 'default' character to the desired. 
 
+(Also available on [Nexus Mods](https://www.nexusmods.com/dragonsdogma2/mods/64?tab=description))
+
+**Note:** Nexus mods Quarantines the file due to it containing a zip within a zip; but also because it controls the keyboard, so they flag it as potentially malicious (Keylogger). 
+
+However, due to the way the program functions (by emulating keypresses fast to move sliders); this cannot be avoided
+
 ## Installation
 As all modules are python-native, it should run without any installation. 
 Will require Python to be installed, tested working on `Python 3.10.11`.
@@ -27,13 +33,17 @@ If you want to add a preset to the templates folder, please open an issue and us
 ## Included Presets/templates:
 - Arwen by [Affectionate_Bad8720](https://www.reddit.com/r/fashiondogma/comments/1bfquvi/arwen_undomiel/)
 - Asian Girl by [Nanal0818](https://www.reddit.com/r/fashiondogma/comments/1bgyw62/asian_girl/)
+- Bela Dimitrescu by [Yep2DArtist](https://www.reddit.com/r/fashiondogma/comments/1bdm9yc/bela_dimitrescu_re8village/)
 - Ciri v3 by [Jayah_](https://www.reddit.com/r/fashiondogma/comments/1bhxsrd/ciri_the_witcher_3_sliders/)
 - Ciri v3 (en Francais) by [Jiboudounet](https://www.reddit.com/r/fashiondogma/comments/1bhxsrd/ciri_the_witcher_3_sliders/kvl0yes/)
 - Daenerys/Khaleesi by [Account deleted (CharacterCreationArt?)](https://www.reddit.com/r/fashiondogma/comments/1bavyle/daenerys_targaryen/)
 - Unnamed by [Far_Leading2516](https://www.reddit.com/r/fashiondogma/comments/1bl5r97/excited_to_finally_begin_my_journey/)
 - Frieren by [VanVulten](https://www.reddit.com/r/fashiondogma/comments/1bhzyw6/frieren_attempt/)
+- Aspen - Snow Leopard Beastren by [about-me](https://www.nexusmods.com/dragonsdogma2/mods/286)
 - Unnamed Pawn by [ScarletRhi](https://www.reddit.com/r/fashiondogma/comments/1bhqji3/my_arisen_and_pawn_are_ready/)
 - Scarlett Johansson by [HevsCreations](https://www.reddit.com/r/fashiondogma/comments/1bj6g34/scarlett_johansson/)
+- TaiLung by [CyberneticDiabetic](https://www.reddit.com/r/fashiondogma/comments/1bbo63y/finally_a_worthy_opponent/)
+
 
 ## Usage
 
