@@ -28,17 +28,8 @@ jobs:
   
         - name: Build Executable with Nuitka
           run: |
-            nuitka --follow-imports \
-                   --standalone \
-                   --remove-output \
-                   --include-data-dir=defaults=defaults \
-                   --enable-plugin=tk-inter \
-                   --include-data-dir=templates=templates \
-                   --output-filename=DD2AutoSlider \
-                   --output-dir=dist \
-                   --product-name=DD2AutoSlider \
-                   --file-version=0.0.14 \
-                   src/main.py
+            nuitka --follow-imports --standalone --remove-output --include-data-dir=defaults=defaults --enable-plugin=tk-inter --include-data-dir=templates=templates --output-filename=DD2AutoSlider --output-dir=dist --product-name=DD2AutoSlider --file-version=0.0.14 src/main.py
+
                
         - name: Upload Artifacts
           uses: actions/upload-artifact@v3
