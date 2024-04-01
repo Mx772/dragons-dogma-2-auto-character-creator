@@ -1,1 +1,4 @@
+Nuitka==2.1.4
+ordered-set==4.1.0
 pywin32==306
+zstandard==0.22.0
