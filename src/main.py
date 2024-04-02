@@ -242,7 +242,7 @@ class App(tk.Tk):
             self.photo_image = tk.PhotoImage(file=photo_path)
             self.photo_canvas.create_image(0, 0, anchor="nw", image=self.photo_image)
         else:
-            app.schedule_log(f"Could not find photo in {photo_path}")
+            print(f"Could not find photo in {photo_path}")
 
     def update_photo(self, *args):
         target_file = self.target_file.get()
