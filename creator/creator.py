@@ -32,7 +32,6 @@ for section in config.sections():
     skip_section = input(f"Skip this section? (y/n) ").lower() == "y"
     if skip_section:
         continue
-
     skip_remaining = False
     for option in config.options(section):
         default_value = config.get(section, option)
@@ -49,14 +48,16 @@ for section in config.sections():
                 if new_value == "":
                     break
                 try:
-                    new_value = int(new_value)
+                    if option == "chest_shape":
+                        new_value = float(new_value)
+                    else:
+                        new_value = int(new_value)
                     config.set(section, option, str(new_value))
                     break
                 except ValueError:
-                    print("Invalid input. Please enter an integer.")
+                    print("Invalid input. Please enter a number.")
         if skip_remaining:
             break
-
     if skip_remaining:
         break
 
